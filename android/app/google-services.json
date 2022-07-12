@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "996108416049",
+    "project_id": "kawaii-passion-hub",
+    "storage_bucket": "kawaii-passion-hub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996108416049:android:08103344ee43602b60d110",
+        "android_client_info": {
+          "package_name": "com.example.kawaii_passion_hub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996108416049-u31aigcb0j81ndpqhtk9j9heg2ktcjp5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kawaii_passion_hub",
+            "certificate_hash": "55a967d64b2d864a61f2e9db169277f8b2323be5"
+          }
+        },
+        {
+          "client_id": "996108416049-8fdpqmhqasndqa8kiacr00kbavvciqt8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8npAmdrTN5wfjSeIWRLU1EATQWB4jAUc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "996108416049-8fdpqmhqasndqa8kiacr00kbavvciqt8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

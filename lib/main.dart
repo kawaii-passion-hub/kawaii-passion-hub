@@ -1,8 +1,14 @@
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:kawaii_passion_hub/auth_gate.dart';
+import 'package:kawaii_passion_hub/dashboard.dart';
 import 'firebase_options.dart';
 import 'loading_page.dart';
+
+const bool _useEmulator = true;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +22,22 @@ class MyApp extends StatelessWidget {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+
+    if (_useEmulator) {
+      await _connectToEmulator();
+    }
+  }
+
+  Future<void> _connectToEmulator() async {
+    final host = Platform.isAndroid ? '10.0.2.2' : 'localhost';
+    //const functionsPort = 5001;
+    const databasePort = 9000;
+
+    if (kDebugMode) {
+      print('Running with local emulator');
+    }
+
+    FirebaseDatabase.instance.useDatabaseEmulator(host, databasePort);
   }
 
   // This widget is the root of your application.
@@ -40,7 +62,9 @@ class MyApp extends StatelessWidget {
             ),
             home: snapshot.connectionState == ConnectionState.waiting
                 ? const LoadingPage()
-                : const AuthGate(),
+                : (_useEmulator
+                    ? const AuthGate()
+                    : const Dashboard(title: "Title")),
           );
         });
   }

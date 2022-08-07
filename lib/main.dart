@@ -1,10 +1,10 @@
 import 'dart:io' show Platform;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:kawaii_passion_hub/auth_gate.dart';
-import 'package:kawaii_passion_hub/dashboard.dart';
 import 'firebase_options.dart';
 import 'loading_page.dart';
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
 
   Future<void> _connectToEmulator() async {
     final host = Platform.isAndroid ? '10.0.2.2' : 'localhost';
-    //const functionsPort = 5001;
+    const authPort = 9099;
     const databasePort = 9000;
 
     if (kDebugMode) {
@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
     }
 
     FirebaseDatabase.instance.useDatabaseEmulator(host, databasePort);
+    FirebaseAuth.instance.useAuthEmulator(host, authPort);
   }
 
   // This widget is the root of your application.
@@ -62,9 +63,7 @@ class MyApp extends StatelessWidget {
             ),
             home: snapshot.connectionState == ConnectionState.waiting
                 ? const LoadingPage()
-                : (_useEmulator
-                    ? const AuthGate()
-                    : const Dashboard(title: "Title")),
+                : const AuthGate(),
           );
         });
   }

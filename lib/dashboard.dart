@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kawaii_passion_hub/loading_page.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key, required this.title}) : super(key: key);
@@ -19,17 +22,36 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int _counter = 0;
+  Map orders = {};
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  Future<void> init() async {
+    if (FirebaseAuth.instance.currentUser == null) {
+      throw Exception('This should not be possible.');
+    }
+    final user = FirebaseAuth.instance.currentUser;
+    var idToken = await user!.getIdTokenResult(true);
+    if (idToken.claims?.containsKey('whitelisted') != true) {
+      final stream = FirebaseDatabase.instance
+          .ref('metadata/${user.uid}/refreshTime')
+          .onValue;
+      // ignore: unused_local_variable
+      await for (final event in stream) {
+        idToken = await user.getIdTokenResult(true);
+        if (idToken.claims?.containsKey('whitelisted') == true) {
+          break;
+        }
+      }
+    }
+    if (idToken.claims!['whitelisted'] != true) {
+      throw Exception('Unautherized.');
+    }
+    final ref = FirebaseDatabase.instance.ref('orders');
+    final snapshot = await ref.get();
+    if (snapshot.exists) {
+      orders = (snapshot.value) as Map;
+    } else {
+      throw Exception('Invalid Database.');
+    }
   }
 
   @override
@@ -40,47 +62,37 @@ class _DashboardState extends State<Dashboard> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pressed the button this many times:',
+    return FutureBuilder(
+        future: init(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoadingPage();
+          }
+          return Scaffold(
+            appBar: AppBar(
+              // Here we take the value from the MyHomePage object that was created by
+              // the App.build method, and use it to set our appbar title.
+              title: Text(widget.title),
             ),
-            Text(
-              '${_counter + 1}',
-              style: Theme.of(context).textTheme.headline4,
+            body: ListView.builder(
+              itemCount: orders.length,
+              itemBuilder: (_, index) {
+                var order = orders.values.elementAt(index);
+                return ListTile(
+                  onTap: () => print('Tapped'),
+                  title: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(order['orderNumber'])),
+                  subtitle: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                          '${order['orderCustomer']['firstName']} ${order['orderCustomer']['lastName']} - ${order['positionPrice']} €')),
+                );
+              },
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+          );
+        });
   }
 }

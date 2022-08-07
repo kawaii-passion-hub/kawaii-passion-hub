@@ -55,6 +55,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '996108416049',
     projectId: 'kawaii-passion-hub',
     authDomain: 'kawaii-passion-hub.firebaseapp.com',
+    databaseURL: 'https://kawaii-passion-hub-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'kawaii-passion-hub.appspot.com',
     measurementId: 'G-LFJP7SZ3GS',
   );
@@ -64,6 +65,7 @@ class DefaultFirebaseOptions {
     appId: '1:996108416049:android:08103344ee43602b60d110',
     messagingSenderId: '996108416049',
     projectId: 'kawaii-passion-hub',
+    databaseURL: 'https://kawaii-passion-hub-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'kawaii-passion-hub.appspot.com',
   );
 }

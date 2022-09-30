@@ -14,7 +14,7 @@ import 'package:flutter/foundation.dart'
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
-class DefaultFirebaseOptions {
+class AuthFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       return web;
@@ -50,22 +50,24 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAPqfBvfBrZVcPbJaE2xZn7shAb3_Cg66E',
-    appId: '1:726615209345:web:a56d3e8c944ed9f1b82480',
-    messagingSenderId: '726615209345',
-    projectId: 'kawaii-passion-hub-orders',
-    authDomain: 'kawaii-passion-hub-orders.firebaseapp.com',
-    databaseURL: 'https://kawaii-passion-hub-orders-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'kawaii-passion-hub-orders.appspot.com',
-    measurementId: 'G-J56CN683V2',
+    apiKey: 'AIzaSyABcWQDZSsBe7UZSKBLbc23Xsqf3JWJtuc',
+    appId: '1:958812987232:web:fa5572c2b8f8a5c8354805',
+    messagingSenderId: '958812987232',
+    projectId: 'kawaii-passion-hub-auth',
+    authDomain: 'kawaii-passion-hub-auth.firebaseapp.com',
+    databaseURL:
+        'https://kawaii-passion-hub-auth-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'kawaii-passion-hub-auth.appspot.com',
+    measurementId: 'G-W04N1EB6TC',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCuBIPk95d4QPaxbyd7DHXPzwhmwOp37_U',
-    appId: '1:726615209345:android:dd808f438d1d42a2b82480',
-    messagingSenderId: '726615209345',
-    projectId: 'kawaii-passion-hub-orders',
-    databaseURL: 'https://kawaii-passion-hub-orders-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'kawaii-passion-hub-orders.appspot.com',
+    apiKey: 'AIzaSyCttki_Tvdkpxv5KIazc5ZCXRtuleaNUSg',
+    appId: '1:958812987232:android:577184ea66b8835a354805',
+    messagingSenderId: '958812987232',
+    projectId: 'kawaii-passion-hub-auth',
+    databaseURL:
+        'https://kawaii-passion-hub-auth-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'kawaii-passion-hub-auth.appspot.com',
   );
 }

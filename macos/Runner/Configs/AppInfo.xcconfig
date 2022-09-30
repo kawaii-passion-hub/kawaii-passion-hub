@@ -8,7 +8,7 @@
 PRODUCT_NAME = kawaii_passion_hub
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.kawaiiPassionHub
+PRODUCT_BUNDLE_IDENTIFIER = com.kawaii_passion.kawaiiPassionHub
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2022 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2022 com.kawaii_passion. All rights reserved.

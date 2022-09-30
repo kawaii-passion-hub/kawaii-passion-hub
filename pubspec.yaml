@@ -34,11 +34,21 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  kawaii_passion_hub_orders:
+    git:
+      url: https://github.com/kawaii-passion-hub/kawaii-passion-hub-orders
+      ref: v1.0.1
+  kawaii_passion_hub_authentication:
+    git:
+      url: https://github.com/kawaii-passion-hub/kawaii-passion-hub-authentication
+      ref: v1.0.3
   firebase_core: ^1.19.1
-  firebase_auth: ^3.4.1
-  flutterfire_ui: ^0.4.2+2
-  google_sign_in: ^5.4.0
-  firebase_database: ^9.1.0
+  flutter_background_service: ^2.4.1
+  flutter_background_service_android: ^2.5.4
+  flutter_background_service_ios: ^2.3.1
+  flutter_local_notifications: ^11.0.1
+  get_it: ^7.2.0
+  event_bus: ^2.0.0
 
 dev_dependencies:
   flutter_test:

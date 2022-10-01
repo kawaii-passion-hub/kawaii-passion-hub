@@ -21,7 +21,7 @@ class Dashboard extends StatelessWidget {
             return const LoadingPage();
           }
 
-          List<Order> orders = snapshot.data!.orders;
+          Diagnostics diagnostics = calculateDiagnostics(snapshot.data!);
 
           Size size = MediaQuery.of(context).size;
           TextStyle cardTextStyle = const TextStyle(
@@ -29,10 +29,12 @@ class Dashboard extends StatelessWidget {
             fontSize: 16,
             color: Color.fromARGB(255, 98, 98, 98),
           );
-          TextStyle cardDataStyle = const TextStyle(
-            fontFamily: 'Montserrat Regular',
-            fontSize: 40,
-            color: Color.fromARGB(255, 98, 98, 98),
+          TextStyle cardDataStyle = cardTextStyle.apply(fontSizeFactor: 2);
+          TextStyle negativeCardDataStyle = cardDataStyle.apply(
+            color: const Color.fromARGB(255, 255, 105, 105),
+          );
+          TextStyle positiveCardDataStyle = cardDataStyle.apply(
+            color: const Color.fromARGB(255, 167, 222, 115),
           );
 
           return Scaffold(
@@ -88,18 +90,82 @@ class Dashboard extends StatelessWidget {
                                   SizedBox(
                                     height: 60,
                                     child: Text(
-                                      orders
-                                          .where((element) =>
-                                              element.state == 'Open')
-                                          .length
-                                          .toString(),
+                                      diagnostics.openOrders.toString(),
                                       style: cardDataStyle,
                                     ),
                                   ),
                                   Text('Open Orders', style: cardTextStyle),
                                 ],
                               ),
-                            )
+                            ),
+                            Card(
+                              elevation: 4,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Text(
+                                      '${diagnostics.revenue.toStringAsFixed(2)}€',
+                                      style: cardDataStyle,
+                                    ),
+                                  ),
+                                  Text('Revenue', style: cardTextStyle),
+                                ],
+                              ),
+                            ),
+                            Card(
+                              elevation: 4,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Text(
+                                      '${diagnostics.yearlyRevenue.toStringAsFixed(2)}€',
+                                      style: cardDataStyle,
+                                    ),
+                                  ),
+                                  Text('Yearly Revenue', style: cardTextStyle),
+                                ],
+                              ),
+                            ),
+                            Card(
+                              elevation: 4,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Text(
+                                      "${(diagnostics.mtm * 100).toStringAsFixed(2)}%",
+                                      style: diagnostics.mtm < 0
+                                          ? negativeCardDataStyle
+                                          : positiveCardDataStyle,
+                                    ),
+                                  ),
+                                  Text('Month-to-Month', style: cardTextStyle),
+                                ],
+                              ),
+                            ),
+                            Card(
+                              elevation: 4,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Text(
+                                      "${(diagnostics.yty * 100).toStringAsFixed(2)}%",
+                                      style: diagnostics.yty < 0
+                                          ? negativeCardDataStyle
+                                          : positiveCardDataStyle,
+                                    ),
+                                  ),
+                                  Text('Year-to-Year', style: cardTextStyle),
+                                ],
+                              ),
+                            ),
                           ],
                         )),
                       ],
@@ -111,4 +177,42 @@ class Dashboard extends StatelessWidget {
           );
         });
   }
+
+  Diagnostics calculateDiagnostics(OrdersUpdated event) {
+    List<Order> orders = event.orders;
+    int openOrders = orders.where((order) => order.state == 'Open').length;
+    DateTime start = DateTime.now().subtract(const Duration(days: 30));
+    DateTime end = DateTime.now();
+    double revenue = calculateRevenue(orders, start, end);
+    end = start;
+    start = start.subtract(const Duration(days: 30));
+    double compare = calculateRevenue(orders, start, end);
+    double mtm = (compare - revenue) / compare;
+    end = DateTime.now();
+    start = DateTime(DateTime.now().year);
+    double yearlyRevenue = calculateRevenue(orders, start, end);
+    end = DateTime(end.year - 1, end.month, end.day, end.hour, end.minute);
+    start = DateTime(DateTime.now().year - 1);
+    compare = calculateRevenue(orders, start, end);
+    double yty = (compare - yearlyRevenue) / compare;
+    return Diagnostics(openOrders, yty, mtm, revenue, yearlyRevenue);
+  }
+
+  double calculateRevenue(List<Order> orders, DateTime start, DateTime end) {
+    return orders
+        .where((order) =>
+            order.issued.isAfter(start) && order.issued.isBefore(end))
+        .fold(0.0, (previousValue, order) => previousValue + order.price);
+  }
+}
+
+class Diagnostics {
+  final int openOrders;
+  final double yty;
+  final double mtm;
+  final double revenue;
+  final double yearlyRevenue;
+
+  Diagnostics(
+      this.openOrders, this.yty, this.mtm, this.revenue, this.yearlyRevenue);
 }

@@ -45,10 +45,10 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin {
           color: Colors.black,
           fontWeight: FontWeight.w500,
         ),
-        tabIconColor: Colors.blue[600],
+        tabIconColor: Theme.of(context).primaryColor,
         tabIconSize: 28.0,
         tabIconSelectedSize: 26.0,
-        tabSelectedColor: Colors.blue[900],
+        tabSelectedColor: Theme.of(context).primaryColorLight,
         tabIconSelectedColor: Colors.white,
         onTabItemSelected: (int value) {
           setState(() {

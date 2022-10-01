@@ -468,8 +468,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v1.0.1"
-      resolved-ref: d01ac9bdce56e725ea21fc8cc2622fdb77cc033e
+      ref: "v1.0.2"
+      resolved-ref: "099169420b6df20457e8dedf3ba9e70d5365f94e"
       url: "https://github.com/kawaii-passion-hub/kawaii-passion-hub-orders"
     source: git
     version: "0.0.1"

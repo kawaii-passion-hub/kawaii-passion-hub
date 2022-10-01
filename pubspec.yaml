@@ -37,7 +37,7 @@ dependencies:
   kawaii_passion_hub_orders:
     git:
       url: https://github.com/kawaii-passion-hub/kawaii-passion-hub-orders
-      ref: v1.0.1
+      ref: v1.0.2
   kawaii_passion_hub_authentication:
     git:
       url: https://github.com/kawaii-passion-hub/kawaii-passion-hub-authentication

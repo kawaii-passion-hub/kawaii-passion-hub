@@ -49,6 +49,7 @@ dependencies:
   flutter_local_notifications: ^11.0.1
   get_it: ^7.2.0
   event_bus: ^2.0.0
+  motion_tab_bar_v2: ^0.2.6
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icon.jpg
+    - assets/top_header.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

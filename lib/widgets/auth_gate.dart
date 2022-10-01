@@ -6,7 +6,7 @@ import 'event_bus_widget.dart';
 import 'package:kawaii_passion_hub_authentication/kawaii_passion_hub_authentication.dart'
     as auth;
 
-import 'home.dart';
+import 'layout.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({Key? key, required this.nextScreenBuilder}) : super(key: key);

@@ -15,7 +15,7 @@ import 'package:kawaii_passion_hub_authentication/kawaii_passion_hub_authenticat
     as auth;
 import 'package:kawaii_passion_hub_orders/kawaii_passion_hub_orders.dart'
     as orders;
-import 'package:kawaii_passion_hub/widgets/home.dart';
+import 'package:kawaii_passion_hub/widgets/layout.dart';
 import 'auth_firebase_options.dart';
 import 'firebase_options.dart';
 
@@ -157,13 +157,26 @@ class MyApp extends StatelessWidget {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-          primarySwatch: Colors.blue,
+          primarySwatch: const MaterialColor(
+            0xffffd4e5, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
+            <int, Color>{
+              50: Color(0xffe6bfce), //10%
+              100: Color(0xffccaab7), //20%
+              200: Color(0xffb394a0), //30%
+              300: Color(0xff997f89), //40%
+              400: Color(0xff806a73), //50%
+              500: Color(0xff66555c), //60%
+              600: Color(0xff4c4045), //70%
+              700: Color(0xff332a2e), //80%
+              800: Color(0xff191517), //90%
+              900: Color(0xff000000), //100%
+            },
+          ),
         ),
         initialRoute: '/',
         navigatorKey: NavigationService().navigatorKey,
         routes: {
-          '/': (context) =>
-              AuthGate(nextScreenBuilder: (c) => const MyHomePage()),
+          '/': (context) => AuthGate(nextScreenBuilder: (c) => const Layout()),
           OrderDetailsView.route: (context) =>
               AuthGate(nextScreenBuilder: (c) => orders.OrderDetailsView()),
         },

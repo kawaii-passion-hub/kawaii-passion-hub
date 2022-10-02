@@ -37,7 +37,7 @@ dependencies:
   kawaii_passion_hub_orders:
     git:
       url: https://github.com/kawaii-passion-hub/kawaii-passion-hub-orders
-      ref: v1.0.2
+      ref: v1.0.3
   kawaii_passion_hub_authentication:
     git:
       url: https://github.com/kawaii-passion-hub/kawaii-passion-hub-authentication
@@ -53,7 +53,8 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
-    sdk: flutter
+    sdk: flutter  
+  flutter_launcher_icons: ^0.10.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -77,6 +78,8 @@ flutter:
   assets:
     - assets/icon.jpg
     - assets/top_header.png
+    - assets/black_and_white.png
+    - assets/black_and_white_outline.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

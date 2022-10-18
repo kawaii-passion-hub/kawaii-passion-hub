@@ -500,20 +500,23 @@ packages:
   kawaii_passion_hub_authentication:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "v1.0.3"
-      resolved-ref: "210b84914064bdc9fa7b0438ea483fc2b25bd30f"
-      url: "https://github.com/kawaii-passion-hub/kawaii-passion-hub-authentication"
-    source: git
+      path: "../kawaii-passion-hub-authentication"
+      relative: true
+    source: path
     version: "0.0.1"
   kawaii_passion_hub_orders:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "v1.0.3"
-      resolved-ref: "9fc2fc1fc73b08fbaa354e1765aae437334ca0ec"
-      url: "https://github.com/kawaii-passion-hub/kawaii-passion-hub-orders"
-    source: git
+      path: "../kawaii-passion-hub-orders"
+      relative: true
+    source: path
+    version: "0.0.1"
+  kawaii_passion_hub_shipping:
+    dependency: "direct main"
+    description:
+      path: "../kawaii-passion-hub-shipping"
+      relative: true
+    source: path
     version: "0.0.1"
   lints:
     dependency: transitive
@@ -738,5 +741,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.17.6 <3.0.0"
+  dart: ">=2.18.0 <3.0.0"
   flutter: ">=2.11.0-0.1.pre"

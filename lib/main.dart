@@ -131,6 +131,7 @@ EventBus initializeApp(FirebaseApp authApp, FirebaseApp ordersApp) {
   GetIt.I.registerSingleton(authApp, instanceName: auth.FirebaseAppName);
   GetIt.I.registerSingleton(ordersApp, instanceName: orders.firebaseAppName);
   orders.initialize(useEmulator: useEmulator);
+  auth.initialize();
   return globalBus;
 }
 

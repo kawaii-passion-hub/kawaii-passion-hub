@@ -1,12 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../global_context.dart';
 import 'event_bus_widget.dart';
 import 'package:kawaii_passion_hub_authentication/kawaii_passion_hub_authentication.dart'
     as auth;
-
-import 'layout.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({Key? key, required this.nextScreenBuilder}) : super(key: key);
@@ -18,9 +15,10 @@ class AuthGate extends StatelessWidget {
     Widget result = StreamBuilder<auth.UserInformationUpdated?>(
       stream:
           EventBusWidget.of(context).eventBus.on<auth.UserInformationUpdated>(),
-      initialData: lastEvent,
+      initialData: auth.AuthentificationState.current != null
+          ? auth.UserInformationUpdated(auth.AuthentificationState.current!)
+          : null,
       builder: (context, snapshot) {
-        lastEvent = snapshot.data;
         if (!snapshot.hasData || !snapshot.data!.newUser.isAuthenticated) {
           return auth.AuthenticationWidget(
             googleClientId: const String.fromEnvironment('GOOGLE_CLIENT_ID'),
@@ -34,7 +32,6 @@ class AuthGate extends StatelessWidget {
         return nextScreenBuilder(context);
       },
     );
-    auth.initialize();
     return result;
   }
 }
